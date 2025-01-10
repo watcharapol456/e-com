@@ -17,8 +17,10 @@ export default async function RootLayout({
       <body className={inter.className}>
          <ReduxProvider>
         <Navbar></Navbar>
+        <main className=" flex-grow" >
         {children}
-        <Footer></Footer>
+        </main>
+        
         </ReduxProvider>
       </body>
     </html>
