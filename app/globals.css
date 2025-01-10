@@ -120,3 +120,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.cart-badge{
+  @apply absolute font-bold text-orange-600 ml-4 mt-1 text-center w-4
+}
