@@ -7,7 +7,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { use } from "react";
+
 
 interface DataProduct {
   id: string;
@@ -34,7 +34,7 @@ interface CartItem {
 }
 
 const Page = ({ params }: { params: { id: string } }) => {
-  const { id } = use(params);
+  const id = params.id;
   const dispatch = useDispatch<AppDispatch>();
   const cartArray: CartItem[] = useAppSelector((state) => state.cart);
 
