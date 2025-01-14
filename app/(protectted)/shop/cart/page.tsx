@@ -1,7 +1,9 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { updateCart } from "@/redux/features/cart-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -123,6 +125,10 @@ function CartPage() {
         )}{" "}
         ฿
       </div>
+      <Link href={'/payment'}>
+      <Button>ชำระเงิน</Button>
+      </Link>
+
     </div>
   );
 }

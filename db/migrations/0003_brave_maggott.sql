@@ -1,0 +1,1 @@
+ALTER TABLE "stock_inventory" ADD COLUMN "quantity" text;
