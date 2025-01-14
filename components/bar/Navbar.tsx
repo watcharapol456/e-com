@@ -1,4 +1,5 @@
 "use client";
+
 import { useAppSelector } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,6 +41,7 @@ const Navbar = () => {
             <span>{cartItems}</span>
           </div>
         </div>
+        
       </div>
     </div>
   );
