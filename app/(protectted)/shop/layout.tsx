@@ -17,10 +17,7 @@ export default async function RootLayout({
       <body className={inter.className}>
          <ReduxProvider>
         <Navbar></Navbar>
-      
         {children}
-       
-        
         </ReduxProvider>
       </body>
     </html>

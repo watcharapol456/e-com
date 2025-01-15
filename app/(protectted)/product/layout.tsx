@@ -1,5 +1,5 @@
 
-import Footer from "@/components/bar/Footer";
+// import Footer from "@/components/bar/Footer";
 import Navbar from "@/components/bar/Navbar";
 import ReduxProvider from "@/redux/provider";
 
@@ -22,7 +22,7 @@ export default async function RootLayout({
         <main className="flex-grow">
         {children}
           </main>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
         </ReduxProvider>
   
   
