@@ -1,7 +1,5 @@
 "use server"
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import {  signOut } from "@/auth";
-import { Button } from "@/components/ui/button";
+
 import db from "@/db";
 import { error } from "console";
 import Image from "next/image";

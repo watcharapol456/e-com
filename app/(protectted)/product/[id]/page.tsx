@@ -69,7 +69,7 @@ const Page = () => {
     };
 
     fetchData();
-  }, []);
+  }, [paramsnum]);
 
   
 
