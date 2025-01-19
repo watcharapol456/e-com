@@ -6,7 +6,7 @@ interface CartItemState {
   imgURL: string;
   labelName: string;
   labelPrice: number;
-  quantity: number;
+  stock: number;
 }
 
 const initialState: CartItemState[] = [];

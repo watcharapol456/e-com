@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { updateCart } from "@/redux/features/cart-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
+import { error } from "console";
 import Image from "next/image";
 import Link from "next/link";
-import {  useParams } from "next/navigation";
-import {  useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 interface DataProduct {
@@ -23,6 +24,7 @@ interface DataProduct {
   brand: string;
   benefits: string;
   warnings: string;
+  stock: number;
 }
 
 interface CartItem {
@@ -31,54 +33,47 @@ interface CartItem {
   imgURL: string;
   labelName: string;
   labelPrice: number;
-  quantity: number;
+  stock: number;
 }
 
 const Page = () => {
-  const paramId = useParams<{ id: string;  }>()
+  const paramId = useParams<{ id: string }>();
   const paramsnum = Number(paramId.id);
- 
+
   const dispatch = useDispatch<AppDispatch>();
   const cartArray: CartItem[] = useAppSelector((state) => state.cart);
-  const [data, setData] = useState<DataProduct | null>(null);
+  const [data, setData] = useState<DataProduct>();
 
-  
-  console.log("DEBUG ID",paramsnum)
-  console.log("DEBUG ID",typeof paramsnum);
-
+  console.log("DEBUG ID", paramsnum);
+  console.log("DEBUG ID", typeof paramsnum);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://www.localhost:3000/api/getdata');
+        const response = await fetch("http://localhost:3000/api/getdata");
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        // const result = await response.json();
-        // const matchedItem = result.select().from(stockInventory).where(eq(stockInventory.id,paramsnum))
         const result: DataProduct[] = await response.json();
-
-        // หา item ที่มี id ตรงกับ paramsnum
-        const matchedItem = result.find((item) => Number(item.id) === paramsnum);
-
-        setData(matchedItem || null);
-        
+        console.log("DEBUG API Response", result);
+        const matchedItem = result.find(
+          (item) => Number(item.id) === paramsnum
+        );
+        setData(matchedItem);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [paramsnum]);
-
-  
 
   const addToCart = (product: DataProduct) => {
     const itemIndex = cartArray.findIndex((item) => item.id === product.id);
 
     if (itemIndex !== -1) {
       const updatedCart = cartArray.map((item, index) =>
-        index === itemIndex ? { ...item, quantity: item.quantity + 1 } : item
+        index === itemIndex ? { ...item, quantity: item.stock + 1 } : item
       );
 
       dispatch(updateCart(updatedCart));
@@ -89,32 +84,32 @@ const Page = () => {
         labelPrice: product.labelPrice,
         id: product.id,
         imgURL: product.imgURL,
-        quantity: 1,
+        stock: 1,
       };
       const updatedCart = [...cartArray, newCartItem];
       dispatch(updateCart(updatedCart));
     }
   };
 
- 
   if (!data) {
-    return null
-    // return redirect("/shop");
+    return console.log("DEBUG Data", data);
   }
 
   return (
     <div className="flex max-w-full p-6 bg-white h-screen justify-center ml-56">
       <div className="w-1/3 flex justify-center items-center">
-        <Image 
-        src={data.imgURL}
-        alt={data.labelName}
-        height={300}
-        width={300}
+        <Image
+          src={data.imgURL}
+          alt={data.labelName}
+          height={300}
+          width={300}
         />
       </div>
 
       <div className="w-2/3 pl-8 flex flex-col justify-center">
-        <h2 className="text-3xl font-semibold text-gray-800">{data.labelName}</h2>
+        <h2 className="text-3xl font-semibold text-gray-800">
+          {data.labelName}
+        </h2>
         <p className="text-2xl text-gray-600 mb-4">{`Price: ${data.labelPrice} บาท`}</p>
 
         <div className="text-lg space-y-2">
@@ -124,16 +119,20 @@ const Page = () => {
               <span className="font-medium text-gray-700">ID:</span> {data.id}
             </li>
             <li>
-              <span className="font-medium text-gray-700">Features:</span> {data.features}
+              <span className="font-medium text-gray-700">Features:</span>{" "}
+              {data.features}
             </li>
             <li>
-              <span className="font-medium text-gray-700">Ingredients:</span> {data.ingredients}
+              <span className="font-medium text-gray-700">Ingredients:</span>{" "}
+              {data.ingredients}
             </li>
             <li>
-              <span className="font-medium text-gray-700">Properties:</span> {data.properties}
+              <span className="font-medium text-gray-700">Properties:</span>{" "}
+              {data.properties}
             </li>
             <li>
-              <span className="font-medium text-gray-700">Usage:</span> {data.usage}
+              <span className="font-medium text-gray-700">Usage:</span>{" "}
+              {data.usage}
             </li>
             <li>
               <span className="font-medium text-gray-700">
@@ -142,7 +141,8 @@ const Page = () => {
               {data.registration_number}
             </li>
             <li>
-              <span className="font-medium text-gray-700">Brand:</span> {data.brand}
+              <span className="font-medium text-gray-700">Brand:</span>{" "}
+              {data.brand}
             </li>
             <li>
               <span className="font-medium text-gray-700">Benefits:</span>{" "}
@@ -151,6 +151,10 @@ const Page = () => {
             <li>
               <span className="font-medium text-gray-700">Warnings:</span>{" "}
               {data.warnings.length > 0 ? data.warnings : "None"}
+            </li>
+            <li>
+              <span className="font-medium text-gray-700">quantity:</span>{" "}
+              {data.stock}
             </li>
           </ul>
           <div className="flex flex-row gap-5">

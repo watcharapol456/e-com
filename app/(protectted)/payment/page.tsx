@@ -15,7 +15,7 @@ const ThankYouPage = () => {
         <p className="mt-2 text-center text-gray-500">
           หากคุณมีคำถามเพิ่มเติม กรุณาติดต่อเราได้ตลอดเวลา
         </p>
-        <Link href="/">
+        <Link href="/shop">
           <div className="block px-6 py-3 mt-6 text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600">
             กลับไปยังหน้าแรก
           </div>

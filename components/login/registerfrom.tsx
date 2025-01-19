@@ -19,7 +19,7 @@ import { FormSucces } from "./from-success";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
-import { register } from "@/app/action/action.register";
+import { register } from "@/action/action.register";
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");

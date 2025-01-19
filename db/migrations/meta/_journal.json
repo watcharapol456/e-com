@@ -29,6 +29,27 @@
       "when": 1736709379849,
       "tag": "0003_brave_maggott",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1737113811686,
+      "tag": "0004_nebulous_paibok",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1737199310544,
+      "tag": "0005_wise_sprite",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1737202559930,
+      "tag": "0006_daffy_baron_strucker",
+      "breakpoints": true
     }
   ]
 }

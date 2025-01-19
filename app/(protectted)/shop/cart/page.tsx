@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { updateCart } from "@/redux/features/cart-slice";
 import { AppDispatch, useAppSelector } from "@/redux/store";
@@ -13,7 +14,7 @@ interface CartItem {
   imgURL: string;
   labelName: string;
   labelPrice: number;
-  quantity: number;
+  stock: number;
 }
 
 function CartPage() {
@@ -25,18 +26,44 @@ function CartPage() {
     setCartItems(cartArray);
   }, [cartArray]);
 
+  const handleOrder = async () => {
+    try {
+      const orderItems = cartItems.map((item) => ({
+        productId: item.id,
+        quantity: item.stock,
+      }));
+
+      const res = await fetch("http://localhost:3000/api/stock", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: orderItems }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        alert(error.error);
+        return;
+      }
+
+      alert("Order placed successfully!");
+    } catch (error) {
+      console.error("Error ordering products:", error);
+      alert("Failed to place order.");
+    }
+  };
+
   const incrementCartItem = (index: number) => {
     const updatedItems = cartItems.map((item, i) =>
-      i === index ? { ...item, quantity: item.quantity + 1 } : item
+      i === index ? { ...item, stock: item.stock + 1 } : item
     );
     dispatch(updateCart(updatedItems));
   };
 
   const decrementCartItem = (index: number) => {
     const updatedItems = cartItems.map((item, i) =>
-      i === index && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
+      i === index && item.stock > 1 ? { ...item, stock: item.stock - 1 } : item
     );
     dispatch(updateCart(updatedItems));
   };
@@ -55,13 +82,13 @@ function CartPage() {
       ) : (
         cartArray.map((item, index) => (
           <div
-            key={index}
+            key={item.id}
             className="flex items-center justify-between bg-gray-100 p-4 mb-4 rounded-lg shadow-md mt-8"
           >
             <div className="flex items-center">
               <Image
                 src={item.imgURL}
-                alt={"image"}
+                alt={item.labelName}
                 width={60}
                 height={60}
                 className="object-cover rounded-lg mr-4"
@@ -77,15 +104,12 @@ function CartPage() {
             <div className="flex items-center gap-6 py-3">
               <div className="flex flex-col w-full">
                 <div className="flex items-center justify-center text-2xl font-semibold">
-                  {isNaN(item.quantity * item.labelPrice)
-                    ? 0
-                    : item.quantity * item.labelPrice}{" "}
-                  ฿
+                  {item.stock * item.labelPrice} ฿
                 </div>
 
                 <div className="mt-3">
                   <div className="text-gray-600 text-sm flex items-center justify-center">
-                    Quantity: {item.quantity}
+                    Quantity: {item.stock}
                   </div>
                   <div className="flex flex-row gap-6 mt-2">
                     <button
@@ -94,7 +118,6 @@ function CartPage() {
                     >
                       -
                     </button>
-
                     <button
                       className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-200"
                       onClick={() => incrementCartItem(index)}
@@ -105,7 +128,7 @@ function CartPage() {
 
                   <div className="mt-4 flex items-center justify-center">
                     <button
-                      className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-200 "
+                      className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-all duration-200"
                       onClick={() => removeCartItem(index)}
                     >
                       Remove
@@ -120,15 +143,23 @@ function CartPage() {
       <div className="mt-6 text-right font-bold text-xl">
         Total:{" "}
         {cartItems.reduce(
-          (total, item) => total + item.quantity * item.labelPrice,
+          (total, item) => total + item.stock * item.labelPrice,
           0
         )}{" "}
         ฿
       </div>
-      <Link href={'/payment'}>
-      <Button>ชำระเงิน</Button>
-      </Link>
-
+      {cartArray.length > 0 && (
+        <div className="mt-6 text-right">
+          <Link href={"/shop"}>
+            <button
+              className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all duration-200"
+              onClick={handleOrder}
+            >
+              Place Order
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

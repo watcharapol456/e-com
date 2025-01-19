@@ -19,7 +19,7 @@ import { FormSucces } from "./from-success";
 
 import { useState, useTransition } from "react";
 import { Button } from "../ui/button";
-import { login } from "@/app/action/action.login";
+import { login } from "@/action/action.login";
 
 export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");

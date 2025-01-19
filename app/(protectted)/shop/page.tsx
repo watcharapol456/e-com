@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import db from "@/db";
 import { error } from "console";
@@ -14,7 +14,7 @@ import Link from "next/link";
 // }
 
 const ProductPage = async () => {
-  try{
+  try {
     const allProducts = await db.query.stockInventory.findMany();
     return (
       <div>
@@ -33,24 +33,24 @@ const ProductPage = async () => {
             </div>
           </div>
         </div>
-  
+
         {/* Product Section */}
         <div className="grid grid-cols-2 gap-6 justify-center justify-items-center m-5">
           {allProducts.map((item) => (
             <Link
-              key={item.key}
+              key={item.id}
               href={`/product/${item.id}`}
               className="w-1/2 flex justify-center"
             >
               <div className="w-full flex flex-col items-center p-4 border rounded-lg shadow-md bg-white">
-              
-                {/* <Image
-                  src={item.imgURL}
+                <Image
+                  src={item.imgURL ?? "/default-image.jpg"} // Fallback to default image if imgURL is null
                   alt={item.labelName}
                   width={100}
                   height={100}
                   className="rounded-md"
-                /> */}
+                />
+
                 <p className="mt-2 text-lg font-semibold">{item.labelName}</p>
                 <p className="text-gray-600">{`Price: ${item.labelPrice} บาท`}</p>
               </div>
@@ -59,7 +59,7 @@ const ProductPage = async () => {
         </div>
       </div>
     );
-  }catch{
+  } catch {
     return error;
   }
 
@@ -93,7 +93,5 @@ const ProductPage = async () => {
   //     labelPrice: "10",
   //   },
   // ];
-
- 
-}
+};
 export default ProductPage;

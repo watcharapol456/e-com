@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   images: {
-    domains: ['hfx7w8onsf.ufs.sh'], 
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'hfx7w8onsf.ufs.sh',
+        pathname: '/**', 
+      },
+    ],
   },
 }
 

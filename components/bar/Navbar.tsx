@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react"
 import { useAppSelector } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +12,7 @@ interface CartItem {
   imgURL: string;
   labelName: string;
   labelPrice: number;
-  quantity: number;
+  stock: number;
 }
 const Navbar = () => {
   const [cartItems, setCartItems] = useState(0);
@@ -26,7 +27,7 @@ const Navbar = () => {
     <div className="flex bg-gray-800 h-[100px] w-full fixed z-50 top-0 left-0 ">
       <div className="flex flex-1 justify-between text-white">
         <div className=" justify-center justify-items-center flex m-5 text-5xl">
-          <Link href={"/"}>logo</Link>
+          <Link href={"/shop"}>logo</Link>
         </div>
         <div className="relative flex justify-center justify-items-center m-5">
           <Link href={"/shop/cart"}>
@@ -41,7 +42,7 @@ const Navbar = () => {
             <span>{cartItems}</span>
           </div>
         </div>
-        
+        <button onClick={() => signOut()} className="-ml-24 p-2 text-xl text-white w-full" >Sign Out</button>
       </div>
     </div>
   );

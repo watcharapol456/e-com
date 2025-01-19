@@ -1,0 +1,1 @@
+ALTER TABLE "stock_inventory" DROP COLUMN "key";
