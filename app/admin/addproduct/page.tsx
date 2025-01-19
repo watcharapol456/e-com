@@ -4,7 +4,10 @@ import React from 'react'
 
 function NewProductPage() {
   return (
-    <AddProductForm></AddProductForm>
+    <div className='flex h-screen w-full justify-center items-center'>
+        <AddProductForm></AddProductForm>
+    </div>
+    
   )
 }
 

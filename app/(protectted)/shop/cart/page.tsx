@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-
+import { useRouter } from 'next/navigation'; 
 interface CartItem {
   id: string;
   key: string;
@@ -21,38 +21,43 @@ function CartPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const cartArray: CartItem[] = useAppSelector((state) => state.cart);
-
+  const router = useRouter(); 
   useEffect(() => {
     setCartItems(cartArray);
   }, [cartArray]);
 
-  const handleOrder = async () => {
-    try {
-      const orderItems = cartItems.map((item) => ({
-        productId: item.id,
-        quantity: item.stock,
-      }));
+  // นำเข้า useRouter
 
-      const res = await fetch("http://localhost:3000/api/stock", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ items: orderItems }),
-      });
+const handleOrder = async () => {
 
-      if (!res.ok) {
-        const error = await res.json();
-        alert(error.error);
-        return;
-      }
+  try {
+    const orderItems = cartItems.map((item) => ({
+      productId: item.id,
+      quantity: item.stock,
+    }));
 
-      alert("Order placed successfully!");
-    } catch (error) {
-      console.error("Error ordering products:", error);
-      alert("Failed to place order.");
+    const res = await fetch("http://localhost:3000/api/stock", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ items: orderItems }),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      alert(error.error);
+      return;
     }
-  };
+
+    
+    router.push("/payment");  // เปลี่ยนเส้นทางไปยังหน้าจ่ายเงิน
+  } catch (error) {
+    console.error("Error ordering products:", error);
+    alert("Failed to place order.");
+  }
+};
+
 
   const incrementCartItem = (index: number) => {
     const updatedItems = cartItems.map((item, i) =>

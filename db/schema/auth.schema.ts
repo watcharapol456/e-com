@@ -5,9 +5,12 @@ import {
     text,
     primaryKey,
     integer,
+    pgEnum,
   
   } from "drizzle-orm/pg-core"
   import type { AdapterAccountType } from "next-auth/adapters"
+
+  const RoleEnum = pgEnum('role', ['USER', 'ADMIN']);
    
   export const users = pgTable("userpass", {
     id: text("id")
@@ -19,6 +22,7 @@ import {
     image: text("image"),
     username: text("username").notNull(),
     password: text("password").notNull(),
+    role: RoleEnum('role').notNull().default('USER'),
   })
    
   export const accounts = pgTable(

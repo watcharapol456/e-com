@@ -7,6 +7,12 @@ module.exports = {
         hostname: 'hfx7w8onsf.ufs.sh',
         pathname: '/**', 
       },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io', 
+        port: '', 
+        pathname: '/f/**', // 
+      },
     ],
   },
 }

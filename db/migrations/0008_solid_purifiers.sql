@@ -1,0 +1,1 @@
+ALTER TABLE "userpass" RENAME COLUMN "role" TO "isAdmin";

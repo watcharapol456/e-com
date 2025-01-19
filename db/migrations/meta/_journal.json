@@ -50,6 +50,27 @@
       "when": 1737202559930,
       "tag": "0006_daffy_baron_strucker",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1737288566220,
+      "tag": "0007_naive_loa",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1737293302066,
+      "tag": "0008_solid_purifiers",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1737294645336,
+      "tag": "0009_romantic_phantom_reporter",
+      "breakpoints": true
     }
   ]
 }

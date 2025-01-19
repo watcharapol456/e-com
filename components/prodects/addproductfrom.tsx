@@ -33,7 +33,7 @@ function AddProductForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto mt-8"
+      className="p-6 bg-white shadow-md rounded-lg max-w-md mx-auto mt-8 w-[600px]"
     >
       <h1 className="text-2xl font-bold mb-4">Add New Product</h1>
 
